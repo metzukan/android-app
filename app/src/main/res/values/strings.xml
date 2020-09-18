@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">metzukan</string>
+    <string name="channel_name">metzukan</string>
+    <string name="channel_description">metzukan emergency notification</string>
+    <string name="metzukan_start_toast">metzukan service is up and running</string>
+    <string name="metzukan_background_service_name">metzukan background service</string>
+    <string name="metzukan_background_notification_msg">metzukan service is running in background</string>
+    <string name="metzukan_notification_title">Metzukan Alert</string>
+    <string name="metzukan_notification_msg">Please tell us you are OK</string>
+    <string name="metzukan_notification_submit_ok">I am OK</string>
+    <string name="service_name">metzukan_service</string>
+
 </resources>
