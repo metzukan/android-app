@@ -2,12 +2,21 @@
     <string name="app_name">metzukan</string>
     <string name="channel_name">metzukan</string>
     <string name="channel_description">metzukan emergency notification</string>
-    <string name="metzukan_start_toast">metzukan service is up and running</string>
-    <string name="metzukan_background_service_name">metzukan background service</string>
-    <string name="metzukan_background_notification_msg">metzukan service is running in background</string>
-    <string name="metzukan_notification_title">Metzukan Alert</string>
-    <string name="metzukan_notification_msg">Please tell us you are OK</string>
-    <string name="metzukan_notification_submit_ok">I am OK</string>
     <string name="service_name">metzukan_service</string>
-
+    <string name="metzukan_background_service_name">metzukan background service</string>
+    <string name="metzukan_start_toast">שירות מצוכאן הופעל</string>
+    <string name="metzukan_background_notification_msg">Metzukan Emergency Background Service</string>
+    <string name="metzukan_notification_title">הודעה ממצוכאן</string>
+    <string name="metzukan_notification_msg">בבקשה ספר לנו שאתה בסדר</string>
+    <string name="metzukan_notification_submit_ok">אני בסדר</string>
+    <string name="metzukan_user_created_toast">משתמש נוצר בהצלחה</string>
+    <string name="metzukan_user_created_failed_toast">יצירת משתמש נכשלה</string>
+    <string name="metzukan_user_ack_toast">ההודעה נשלחה בהצלחה</string>
+    <string name="metzukan_user_ack_failed_toast">שליחת ההודעה נכשלה</string>
+    <string name="metzukan_user_removed_toast">המשתמש הוסר בהצלחה</string>
+    <string name="metzukan_user_removed_failed_toast">הסרת המשתמש נכשלה</string>
+    <string name="metzukan_about_to_send_not_response_ack_toast">לא זוהתה תגובה מהמשתמש, שולח הודעה לשרת...</string>
+    <string name="metzukan_about_to_send_emergency_ack_toast">לא זוהתה תגובה מהמשתמש למשך מדי הרבה זמן, שולח הודעת חירום לאנשי הקשר...</string>
+    <string name="metzukan_about_to_send_not_response_ack_notification">לא זוהתה תגובה מהמשתמש, הודעה נשלחה לשרת</string>
+    <string name="metzukan_about_to_send_emergency_ack_toast_notification">לא זוהתה תגובה מהמשתמש למשך מדי הרבה זמן, הודעת חירום נשלחה לאנשי הקשר</string>
 </resources>

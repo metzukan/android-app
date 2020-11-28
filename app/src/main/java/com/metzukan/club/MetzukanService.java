@@ -9,13 +9,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.IBinder;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
+import static com.metzukan.club.Utils.LoadMainContext;
 import static com.metzukan.club.Utils.METZUKAN_CHANNEL_ID;
+import static com.metzukan.club.Utils.METZUKAN_NOTIFICATION_BACKGROUND_SERVICE_ID;
+import static com.metzukan.club.Utils.ShowToast;
 
 public class MetzukanService extends Service {
 
@@ -30,19 +31,42 @@ public class MetzukanService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // Init the util, of not init yet
+        LoadMainContext(this);
+
+        // create notification channel, to allow app to show notifications
         createNotificationChannel();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            startMetzukanForeground();
-        else
-            startForeground(1, new Notification());
+
+        // Start foreground service, to allow service to run in the background
+        startMetzukanForeground();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // TODO create singleton
+        ml = new MetzukanLogic( this);
+        ShowToast(R.string.metzukan_start_toast);
+        return START_STICKY;
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    /**
+     * Run the service in the background, so even if the app is closed, the service will rum
+     */
     private void startMetzukanForeground(){
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            startForeground(METZUKAN_NOTIFICATION_BACKGROUND_SERVICE_ID, new Notification());
+            return;
+        }
+
         String NOTIFICATION_CHANNEL_ID = METZUKAN_CHANNEL_ID;
         String channelName = getString(R.string.metzukan_background_service_name);
-        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
+        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_HIGH);
         chan.setLightColor(Color.BLUE);
         chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -52,12 +76,15 @@ public class MetzukanService extends Service {
         Notification notification = notificationBuilder.setOngoing(true)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(getString(R.string.metzukan_background_notification_msg))
-                .setPriority(NotificationManager.IMPORTANCE_MIN)
+                .setPriority(NotificationManager.IMPORTANCE_MAX)
                 .setCategory(Notification.CATEGORY_SERVICE)
                 .build();
-        startForeground(2, notification);
+        startForeground(METZUKAN_NOTIFICATION_BACKGROUND_SERVICE_ID, notification);
     }
 
+    /**
+     * Create/Open a channel of notification, to allow app to show up notifications
+     */
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
@@ -74,16 +101,4 @@ public class MetzukanService extends Service {
         }
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        // TODO create singleton
-        ml = new MetzukanLogic( this);
-        Toast.makeText(this, R.string.metzukan_start_toast, Toast.LENGTH_SHORT).show();
-        return START_STICKY;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 }

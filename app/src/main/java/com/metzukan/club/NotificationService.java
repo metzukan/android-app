@@ -1,22 +1,13 @@
 package com.metzukan.club;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.IBinder;
-import android.widget.Toast;
-
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
 
-import static com.metzukan.club.Utils.METZUKAN_CHANNEL_ID;
-
+/**
+ * This service used only to catch the notification "OK" button pressed
+ */
 public class NotificationService extends Service {
 
     @Nullable
@@ -27,11 +18,13 @@ public class NotificationService extends Service {
 
     @Override
     public void onCreate() {
+        new NotificationService();
         super.onCreate();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        // On start, just set "submit OK"
         MetzukanLogic.SubmitOK();
         return START_NOT_STICKY;
     }
